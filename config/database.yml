@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: movies_app_development
+  host: localhost
+  port: 5432
+
+test:
+  <<: *default
+  database: movies_app_test
+
+production:
+  <<: *default
+  database: movies_app_test

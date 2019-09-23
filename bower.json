@@ -1,0 +1,21 @@
+{
+  "name": "kickoff",
+  "authors": [
+    "Plum <contact@plum.com.ar>"
+  ],
+  "description": "Rails app kickoff",
+  "main": "",
+  "license": "MIT",
+  "homepage": "http://plum.com.ar",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/assets/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "gentelella": "^1.3.0"
+  }
+}

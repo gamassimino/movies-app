@@ -1,0 +1,7 @@
+test: &test
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
+  host: postgres
+  database: appname_test
+  user: postgres

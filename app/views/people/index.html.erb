@@ -1,0 +1,62 @@
+<div class="right_col" role="main">
+  <div class="">
+    <div class="page-title">
+      <div class="title_left">
+        <h3>Plain Page</h3>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="row">
+
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <table id="people_table" class="table table-hover">
+              <thead>
+                <tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Aliases</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+
+    $('#people_table').DataTable({
+      // language: datatable_lang_es,
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url: '/people',
+        method: 'GET'
+      },
+      // aoColumnDefs: [
+      //   {
+      //     width: '10px',
+      //     aTargets: [0, 3]
+      //   }, {
+      //     aTargets: [3],
+      //     sortable: false
+      //   }
+      // ],
+      responsive: true,
+      iDisplayLength: 25,
+      sPaginationType: 'full_numbers',
+      dom: 'T<"clear">lfrtpi'
+    });
+
+  });
+</script>

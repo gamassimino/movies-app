@@ -1,0 +1,11 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "font-awesome";
+
+// Template.
+@import "vendors/iCheck/skins/flat/green";
+@import "vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min";
+@import "production/css/maps/jquery-jvectormap-2.0.3";
+@import "build/css/custom";
+
+@import "datatables";
