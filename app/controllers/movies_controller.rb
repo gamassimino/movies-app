@@ -15,7 +15,7 @@ class MoviesController < ApplicationController
   end
 
   def show
-    uri = URI("http://localhost:3001/api/v1/movies/#{params[:id]}.json")
+    uri = URI("#{ENV['API_DOMAIN']}/api/v1/movies/#{params[:id]}.json")
     Net::HTTP.get(uri)
     response = Net::HTTP.get_response(uri)
     @movie = JSON.parse(response.body)
@@ -25,7 +25,7 @@ class MoviesController < ApplicationController
   end
 
   def create
-    uri = URI('http://localhost:3001/api/v1/movies')
+    uri = URI("#{ENV['API_DOMAIN']}/api/v1/movies")
     Net::HTTP.post_form(uri, 'title' => params[:title],
      'release_year' => params[:release_year])
     response = Net::HTTP.get_response(uri)

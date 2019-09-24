@@ -15,7 +15,7 @@ class PeopleController < ApplicationController
   end
 
   def show
-    uri = URI("http://localhost:3001/api/v1/people/#{params[:id]}.json")
+    uri = URI("#{ENV['API_DOMAIN']}/api/v1/people/#{params[:id]}.json")
     Net::HTTP.get(uri)
     response = Net::HTTP.get_response(uri)
     @person = JSON.parse(response.body)
@@ -25,7 +25,7 @@ class PeopleController < ApplicationController
   end
 
   def create
-    uri = URI('http://localhost:3001/api/v1/people')
+    uri = URI("#{ENV['API_DOMAIN']}/api/v1/people")
     Net::HTTP.post_form(uri, 'first_name' => params[:first_name],
      'last_name' => params[:last_name], 'aliases' => params[:aliases])
     response = Net::HTTP.get_response(uri)

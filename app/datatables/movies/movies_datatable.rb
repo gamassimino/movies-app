@@ -19,7 +19,7 @@ class Movies::MoviesDatatable < Datatable
   end
 
   def records
-    uri = URI('http://localhost:3001/api/v1/movies.json')
+    uri = URI("#{ENV['API_DOMAIN']}/api/v1/movies.json")
     Net::HTTP.get(uri)
     response = Net::HTTP.get_response(uri)
     JSON.parse(response.body)

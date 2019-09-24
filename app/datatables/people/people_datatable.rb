@@ -20,7 +20,7 @@ class People::PeopleDatatable < Datatable
   end
 
   def records
-    uri = URI('http://localhost:3001/api/v1/people.json')
+    uri = URI("#{ENV['API_DOMAIN']}/api/v1/people.json")
     Net::HTTP.get(uri)
     response = Net::HTTP.get_response(uri)
     JSON.parse(response.body)
