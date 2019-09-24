@@ -1,7 +1,6 @@
 class People::PeopleDatatable < Datatable
   include Rails.application.routes.url_helpers
-  delegate :t, :content_tag, :fa_icon, :link_to,
-           :current_user, to: :@view
+  delegate :content_tag, :fa_icon, :link_to, :current_user, to: :@view
 
   def initialize(view)
     super view
@@ -12,9 +11,10 @@ class People::PeopleDatatable < Datatable
   def data
     paginated_arrays.map do |person|
       [
-        person['first_name'],
-        person['last_name'],
-        person['aliases']
+        link(person['id'], person['first_name']),
+        link(person['id'], person['last_name']),
+        link(person['id'], person['aliases']),
+        link_delete(person['id'])
       ]
     end
   end
@@ -42,18 +42,19 @@ class People::PeopleDatatable < Datatable
     end
   end
 
-  # def link_delete(user)
-  #   confirm = t 'dashboard.users.destroy.confirm'
-  #   title = t 'dashboard.users.destroy.title'
-  #   destroy = content_tag :div, fa_icon('trash-o'), class: "datatable-btn datable-btn-warning"
-  #   content_tag :div,
-  #     link_to(destroy, dashboard_user_path(user),
-  #       method: :delete, data: { confirm: confirm, turbolinks: false }, title: title,
-  #       class: "text-center"), class: 'text-center'
-  # end
+  def link_delete(person_id)
+    if current_user.present?
+      confirm = 'you will delete this person, are you sure?'
+      title = 'Delete Person'
+      destroy = content_tag :div, fa_icon('trash-o'), class: "datatable-btn datable-btn-warning"
+      content_tag :div,
+        link_to(destroy, person_path(id: person_id),
+          method: :delete, data: { confirm: confirm, turbolinks: false }, title: title,
+          class: "text-center"), class: 'text-center'
+    end
+  end
 
-  # def link(user, title)
-  #   link_to(title.to_s, edit_dashboard_user_path(user),
-  #     class: "color-link", data: { turbolinks: false })
-  # end
+  def link(person_id, title)
+    link_to(title, person_path(person_id)) if title.present?
+  end
 end

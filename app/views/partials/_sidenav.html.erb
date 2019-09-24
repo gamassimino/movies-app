@@ -4,20 +4,10 @@
 
       <div class="navbar nav_title" style="border: 0;">
         <%= link_to root_path, class: 'site_title' do  %>
-          <i class="fa fa-paw"></i> <span>Movies App</span>
+          <i class="fa fa-film"></i> <span>Movies App</span>
         <% end %>
       </div>
       <div class="clearfix"></div>
-
-      <div class="profile">
-        <div class="profile_pic">
-          <%= image_tag "img.jpg", :class => "img-circle profile_img"  %>
-        </div>
-        <div class="profile_info">
-          <span>Welcome,</span>
-          <h2>youremail@example.com</h2>
-        </div>
-      </div>
 
       <br />
 
@@ -25,16 +15,20 @@
         <div class="menu_section">
           <h3>General</h3>
           <ul class="nav side-menu">
-            <li><a><i class="fa fa-home"></i> Movies <span class="fa fa-chevron-down"></span></a>
+            <li><a><i class="fa fa-film"></i> Movies <span class="fa fa-chevron-down"></span></a>
               <ul class="nav child_menu" style="display: none">
                 <li><%= link_to 'Movies', movies_path %></li>
-                <li><%= link_to 'New Movie', new_movie_path %></li>
+                <% if current_user.present? %>
+                  <li><%= link_to 'New Movie', new_movie_path %></li>
+                <% end %>
               </ul>
             </li>
-            <li><a><i class="fa fa-edit"></i> People <span class="fa fa-chevron-down"></span></a>
+            <li><a><i class="fa fa-users"></i> People <span class="fa fa-chevron-down"></span></a>
               <ul class="nav child_menu" style="display: none">
                 <li><%= link_to 'People', people_path %></li>
-                <li><%= link_to 'New Person', new_person_path %></li>
+                <% if current_user.present? %>
+                  <li><%= link_to 'New Person', new_person_path %></li>
+                <% end %>
               </ul>
             </li>
           </ul>

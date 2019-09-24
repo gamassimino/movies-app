@@ -1,0 +1,65 @@
+<div class="right_col" role="main">
+  <div class="">
+    <div class="clearfix"></div>
+
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_content">
+            <br>
+
+            <div class="form-horizontal form-label-left">
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Title</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input class="form-control col-md-7 col-xs-12" type="text" name="title" value="<%= @movie['title'] %>" readonly>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Release Year</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input class="form-control col-md-7 col-xs-12" type="text" name="release_year" value="<%= @movie['release_year'] %>" readonly>
+                </div>
+              </div>
+            </div>
+
+            <div class="ln_solid"></div>
+
+            <div class="x_content">
+              <section class="content invoice">
+
+                <div class="row">
+                  <div class="col-xs-12 table">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Actors</th>
+                          <th>Directors</th>
+                          <th>Producers</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><%= @movie['actors'] %></td>
+                          <td><%= @movie['directors'] %></td>
+                          <td><%= @movie['producers'] %></td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+
+                  </div>
+                </div>
+
+              </section>
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
