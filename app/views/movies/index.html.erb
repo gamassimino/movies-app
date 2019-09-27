@@ -46,5 +46,25 @@
       sPaginationType: 'full_numbers',
       dom: 'T<"clear">lfrtpi'
     });
+
+
+    $('#movies_table').on('click', '.delete-button', function(event){
+      event.preventDefault();
+      var id  = this.getAttribute('data-id');
+      var url = '<%= ENV["API_DOMAIN"] %>/api/v1/movies/' + id;
+
+      $.ajax({
+        type: "DELETE",
+        url: url,
+        success: function(response) {
+          $(".delete-button[data-id='"+id+"']").closest('tr').remove()
+        },
+        error: function(response) {
+          $(".delete-button[data-id='"+id+"']").closest('tr').remove()
+        }
+      });
+
+    });
+
   });
 </script>

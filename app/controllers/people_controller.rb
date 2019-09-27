@@ -1,5 +1,7 @@
 class PeopleController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :get_person, only: [:show, :edit]
+
   def index
     respond_to do |format|
       format.html
@@ -15,10 +17,6 @@ class PeopleController < ApplicationController
   end
 
   def show
-    uri = URI("#{ENV['API_DOMAIN']}/api/v1/people/#{params[:id]}.json")
-    Net::HTTP.get(uri)
-    response = Net::HTTP.get_response(uri)
-    @person = JSON.parse(response.body)
   end
 
   def edit
@@ -35,5 +33,12 @@ class PeopleController < ApplicationController
     else
       render :new
     end
+  end
+
+  def get_person
+    uri = URI("#{ENV['API_DOMAIN']}/api/v1/people/#{params[:id]}.json")
+    Net::HTTP.get(uri)
+    response = Net::HTTP.get_response(uri)
+    @person = JSON.parse(response.body)
   end
 end

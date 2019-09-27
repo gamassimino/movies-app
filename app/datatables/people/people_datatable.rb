@@ -46,10 +46,9 @@ class People::PeopleDatatable < Datatable
     if current_user.present?
       confirm = 'you will delete this person, are you sure?'
       title = 'Delete Person'
-      destroy = content_tag :div, fa_icon('trash-o'), class: "datatable-btn datable-btn-warning"
+      destroy = content_tag :div, fa_icon('trash-o'), class: "delete-button datatable-btn datable-btn-warning", data: { id: person_id }
       content_tag :div,
-        link_to(destroy, person_path(id: person_id),
-          method: :delete, data: { confirm: confirm, turbolinks: false }, title: title,
+        link_to(destroy, '', data: { confirm: confirm, turbolinks: false }, title: title,
           class: "text-center"), class: 'text-center'
     end
   end

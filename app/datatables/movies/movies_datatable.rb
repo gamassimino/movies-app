@@ -43,17 +43,14 @@ class Movies::MoviesDatatable < Datatable
     if current_user.present?
       confirm = 'you will delete this movie, are you sure?'
       title = 'Delete Movie'
-      destroy = content_tag :div, fa_icon('trash-o'), class: "datatable-btn datable-btn-warning"
+      destroy = content_tag :div, fa_icon('trash-o'), class: "delete-button datatable-btn datable-btn-warning", data: { id: movie_id }
       content_tag :div,
-        link_to(destroy, movie_path(movie_id),
-          method: :delete, data: { confirm: confirm, turbolinks: false }, title: title,
+        link_to(destroy, '', data: { confirm: confirm, turbolinks: false }, title: title,
           class: "text-center"), class: 'text-center'
     end
   end
 
   def link(movie_id, title)
-    # link_to(title.to_s, movie_path(movie),
-    #   class: "color-link", data: { turbolinks: false })
-    link_to(title, movie_path(movie_id))
+    link_to(title, movie_path(movie_id)) if title.present?
   end
 end

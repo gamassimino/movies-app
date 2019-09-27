@@ -1,0 +1,131 @@
+<div class="right_col" role="main">
+  <div class="">
+    <div class="clearfix"></div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_content">
+            <br>
+
+            <div id="success-alert" class="alert alert-success col-xs-12 col-md-12 col-sm-12 hidden" role="alert">
+              Person was updated successfully
+            </div>
+            <div class="clearfix"></div>
+
+
+            <%= form_with url: people_path, id: 'person_form', class: 'form-horizontal form-label-left', method: :PUT do |f| %>
+              <%= f.hidden_field :id, value: @person['id'] %>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">First name</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <%= f.text_field :first_name, value: @person['first_name'], class: 'form-control col-md-7 col-xs-12' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Last name</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <%= f.text_field :last_name, value: @person['last_name'], class: 'form-control col-md-7 col-xs-12' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Aliases</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <%= f.text_field :aliases, value: @person['aliases'], class: 'form-control col-md-7 col-xs-12' %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :movies_as_actors, class: 'control-label col-md-3 col-sm-3 col-xs-12' %>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <%= f.select :movies_as_actors, [], {}, id: 'movies_as_actors_select', class: 'form-control col-md-7 col-xs-12', multiple: 'multiple' %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :movies_as_directors, class: 'control-label col-md-3 col-sm-3 col-xs-12' %>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <%= f.select :movies_as_directors, [], {}, id: 'movies_as_directors_select', class: 'form-control col-md-7 col-xs-12', multiple: 'multiple' %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :movies_as_producers, class: 'control-label col-md-3 col-sm-3 col-xs-12' %>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <%= f.select :movies_as_producers, [], {}, id: 'movies_as_producers_select', class: 'form-control col-md-7 col-xs-12', multiple: 'multiple' %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-10 col-sm-10 col-xs-12"></label>
+                <%= link_to 'Update Person', edit_person_path(@person), id: 'update_button', class: 'btn btn-warning' %>
+              </div>
+
+            <div class="ln_solid"></div>
+
+
+          <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $('#update_button').on('click', function(event){
+      event.preventDefault();
+
+      var formData = {
+        'id'                 : $('input[name=id]').val(),
+        'first_name'         : $('input[name=first_name]').val(),
+        'last_name'          : $('input[name=last_name]').val(),
+        'aliases'            : $('input[name=aliases]').val(),
+        'movie_actor_ids'    : $('#movies_as_actors_select').val(),
+        'movie_director_ids' : $('#movies_as_directors_select').val(),
+        'movie_producer_ids' : $('#movies_as_producers_select').val()
+      };
+
+      $.ajax({
+        type: "PATCH",
+        url: '<%= ENV["API_DOMAIN"] %>/api/v1/people/<%= @person["id"] %>',
+        data: formData,
+        success: function(response) {
+          console.log('wow');
+          $('#success-alert').removeClass('hidden');
+        }
+      });
+    });
+
+
+    $.ajax({
+      url: '<%= ENV["API_DOMAIN"] %>/api/v1/movies/',
+      success: function(response) {
+        $.each(response, function(key, value) {
+          $('#movies_as_actors_select').append($("<option></option>"))
+          $('#movies_as_actors_select')
+            .append($("<option></option>")
+            .attr("value",value.id)
+            .text(value.title));
+
+          $('#movies_as_directors_select').append($("<option></option>"))
+          $('#movies_as_directors_select')
+            .append($("<option></option>")
+            .attr("value",value.id)
+            .text(value.title));
+
+          $('#movies_as_producers_select').append($("<option></option>"))
+          $('#movies_as_producers_select')
+            .append($("<option></option>")
+            .attr("value",value.id)
+            .text(value.title));
+        });
+
+        $("#movies_as_actors_select").select2({});
+        $("#movies_as_directors_select").select2({});
+        $("#movies_as_producers_select").select2({});
+      }
+    });
+  });
+</script>

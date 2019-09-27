@@ -1,5 +1,7 @@
 class MoviesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :get_movie, only: [:show, :edit]
+
   def index
     respond_to do |format|
       format.html
@@ -15,10 +17,6 @@ class MoviesController < ApplicationController
   end
 
   def show
-    uri = URI("#{ENV['API_DOMAIN']}/api/v1/movies/#{params[:id]}.json")
-    Net::HTTP.get(uri)
-    response = Net::HTTP.get_response(uri)
-    @movie = JSON.parse(response.body)
   end
 
   def edit
@@ -35,5 +33,12 @@ class MoviesController < ApplicationController
     else
       render :new
     end
+  end
+
+  def get_movie
+    uri = URI("#{ENV['API_DOMAIN']}/api/v1/movies/#{params[:id]}.json")
+    Net::HTTP.get(uri)
+    response = Net::HTTP.get_response(uri)
+    @movie = JSON.parse(response.body)
   end
 end

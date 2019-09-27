@@ -20,6 +20,8 @@
 //= require react_ujs
 //= require components
 
+//= require select2
+
 // Template.
 //= require vendors/nprogress/nprogress
 //= require vendors/Chart.js/dist/Chart.min

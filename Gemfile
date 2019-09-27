@@ -39,6 +39,8 @@ gem 'ajax-datatables-rails'
 
 gem 'kaminari'
 
+gem "select2-rails"
+
 group :development, :test do
   # gem 'rubocop', require: false
   # gem 'pronto'

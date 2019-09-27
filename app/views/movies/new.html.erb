@@ -28,6 +28,29 @@
               </div>
             </div>
 
+            <div class="ln_solid"></div>
+            <div class="form-group">
+              <%= f.label :actors, class: 'control-label col-md-3 col-sm-3 col-xs-12' %>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <%= f.select :actors, [], {}, id: 'actors_select', class: 'form-control col-md-7 col-xs-12' %>
+              </div>
+            </div>
+
+            <div class="ln_solid"></div>
+            <div class="form-group">
+              <%= f.label :directors, class: 'control-label col-md-3 col-sm-3 col-xs-12' %>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <%= f.select :directors, [], {}, id: 'directors_select', class: 'form-control col-md-7 col-xs-12' %>
+              </div>
+            </div>
+
+            <div class="ln_solid"></div>
+            <div class="form-group">
+              <%= f.label :producers, class: 'control-label col-md-3 col-sm-3 col-xs-12' %>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <%= f.select :producers, [], {}, id: 'producers_select', class: 'form-control col-md-7 col-xs-12' %>
+              </div>
+            </div>
 
             <div class="ln_solid"></div>
             <div class="form-group">
@@ -43,3 +66,45 @@
   </div>
 </div>
 
+<script>
+  $(document).ready(function(){
+    $.ajax({
+      url: '<%= ENV["API_DOMAIN"] %>/api/v1/people/actors',
+      success: function(response) {
+        $('#actors_select').append($("<option></option>"));
+        $.each(response, function(key, value) {
+          $('#actors_select')
+            .append($("<option></option>")
+            .attr("value",value[0])
+            .text(value[1]));
+        });
+      }
+    });
+
+    $.ajax({
+      url: '<%= ENV["API_DOMAIN"] %>/api/v1/people/directors',
+      success: function(response) {
+        $('#directors_select').append($("<option></option>"));
+        $.each(response, function(key, value) {
+          $('#directors_select')
+            .append($("<option></option>")
+            .attr("value",value[0])
+            .text(value[1]));
+        });
+      }
+    });
+
+    $.ajax({
+      url: '<%= ENV["API_DOMAIN"] %>/api/v1/people/producers',
+      success: function(response) {
+        $('#producers_select').append($("<option></option>"));
+        $.each(response, function(key, value) {
+          $('#producers_select')
+            .append($("<option></option>")
+            .attr("value",value[0])
+            .text(value[1]));
+        });
+      }
+    });
+  });
+</script>

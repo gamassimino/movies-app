@@ -25,6 +25,14 @@
                   <input class="form-control col-md-7 col-xs-12" type="text" name="aliases" value="<%= @person['aliases'] %>" readonly>
                 </div>
               </div>
+
+              <% if current_user.present? %>
+                <div class="form-group">
+                  <label class="control-label col-md-10 col-sm-10 col-xs-12"></label>
+                  <%= link_to 'Edit Person', edit_person_path(@person), class: 'btn btn-warning' %>
+                </div>
+              <% end %>
+
             </div>
             <div class="ln_solid"></div>
             <div class="x_content">
@@ -57,4 +65,3 @@
     </div>
   </div>
 </div>
-

@@ -1,0 +1,122 @@
+<div class="right_col" role="main">
+  <div class="">
+    <div class="clearfix"></div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_content">
+            <br>
+
+            <div id="success-alert" class="alert alert-success col-xs-12 col-md-12 col-sm-12 hidden" role="alert">
+              Movie was updated successfully
+            </div>
+            <div class="clearfix"></div>
+
+
+            <%= form_with url: movies_path, id: 'movie_form', class: 'form-horizontal form-label-left', method: :PUT do |f| %>
+              <%= f.hidden_field :id, value: @movie['id'] %>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Title</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <%= f.text_field :title, value: @movie['title'], class: 'form-control col-md-7 col-xs-12' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Release Year</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <%= f.date_field :release_year, value: @movie['release_year'], class: 'form-control col-md-7 col-xs-12' %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :actors, class: 'control-label col-md-3 col-sm-3 col-xs-12' %>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <%= f.select :actors, [], {}, id: 'actors_select', class: 'form-control col-md-7 col-xs-12', multiple: 'multiple' %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :directors, class: 'control-label col-md-3 col-sm-3 col-xs-12' %>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <%= f.select :directors, [], {}, id: 'directors_select', class: 'form-control col-md-7 col-xs-12', multiple: 'multiple' %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :producers, class: 'control-label col-md-3 col-sm-3 col-xs-12' %>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <%= f.select :producers, [], {}, id: 'producers_select', class: 'form-control col-md-7 col-xs-12', multiple: 'multiple' %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-10 col-sm-10 col-xs-12"></label>
+                <%= link_to 'Update Movie', edit_movie_path(@movie), id: 'update_button', class: 'btn btn-warning' %>
+              </div>
+
+            <div class="ln_solid"></div>
+
+          <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $('#update_button').on('click', function(event){
+      event.preventDefault();
+
+      var formData = {
+        'id'           : $('input[name=id]').val(),
+        'title'        : $('input[name=title]').val(),
+        'release_year' : $('input[name=release_year]').val(),
+        'actor_ids'    : $('#actors_select').val(),
+        'director_ids' : $('#directors_select').val(),
+        'producer_ids' : $('#producers_select').val()
+      };
+
+      $.ajax({
+        type: "PATCH",
+        url: '<%= ENV["API_DOMAIN"] %>/api/v1/movies/<%= @movie["id"] %>',
+        data: formData,
+        success: function(response) {
+          $('#success-alert').removeClass('hidden');
+        }
+      });
+    });
+
+
+    $.ajax({
+      url: '<%= ENV["API_DOMAIN"] %>/api/v1/people',
+      success: function(response) {
+        $.each(response, function(key, value) {
+          $('#actors_select').append($("<option></option>"))
+          $('#actors_select')
+            .append($("<option></option>")
+            .attr("value",value.id)
+            .text(value.last_name+', '+value.first_name));
+
+          $('#directors_select').append($("<option></option>"))
+          $('#directors_select')
+            .append($("<option></option>")
+            .attr("value",value.id)
+            .text(value.last_name+', '+value.first_name));
+
+          $('#producers_select').append($("<option></option>"))
+          $('#producers_select')
+            .append($("<option></option>")
+            .attr("value",value.id)
+            .text(value.last_name+', '+value.first_name));
+        });
+
+        $("#actors_select").select2({});
+        $("#directors_select").select2({});
+        $("#producers_select").select2({});
+      }
+    });
+  });
+</script>
